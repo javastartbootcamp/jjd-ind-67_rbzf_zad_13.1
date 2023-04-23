@@ -1,24 +1,13 @@
 package pl.javastart.voting;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Możesz dodać kolejne metody i pola do klasy. Nie zmieniaj istniejących metod.
  */
 public class VotingResult {
-    List<Vote> votingResult;
-
-    public VotingResult(List<Vote> votingResult) {
-        this.votingResult = votingResult;
-    }
-
-    public List<Vote> getVotingResult() {
-        return votingResult;
-    }
-
-    public void setVotingResult(List<Vote> votingResult) {
-        this.votingResult = votingResult;
-    }
+    List<Vote> votingResult = new ArrayList<>();
 
     /**
      * Metoda powinna drukować wyniki głosowania w takiej postaci:
@@ -29,36 +18,16 @@ public class VotingResult {
 
     public void printResults() {
         // metoda powinna drukować wyniki głosowania
-        System.out.printf("%s %.2f%s \n", "Głosów za: ", calculateInFavourVotesPercentage(votingResult), "%");
-        System.out.printf("%s %.2f%s \n", "Głosów przeciw: ", calculateAgainstVotesPercentage(votingResult), "%");
-        System.out.printf("%s %.2f%s \n", "Wstrzymało się: ", calculateRestrainVotesPercentage(votingResult), "%");
+        System.out.printf("%s%.2f%s \n", "Głosów za: ", calculateVotesByTypePercentage(votingResult, true), "%");
+        System.out.printf("%s%.2f%s \n", "Głosów przeciw: ", calculateVotesByTypePercentage(votingResult, false), "%");
+        System.out.printf("%s%.2f%s \n", "Wstrzymało się: ", calculateVotesByTypePercentage(votingResult, null), "%");
     }
 
-    private double calculateRestrainVotesPercentage(List<Vote> votingResult) {
+    private double calculateVotesByTypePercentage(List<Vote> votingResult, Boolean voteType) {
         int sum = 0;
-        double result;
         for (Vote vote : votingResult) {
-            if (vote.getVote().equals("WSTRZYMAŁ SIĘ")) {
-                sum++;
-            }
-        }
-        return ((double) sum / votingResult.size()) * 100;
-    }
 
-    private double calculateAgainstVotesPercentage(List<Vote> votingResult) {
-        int sum = 0;
-        for (Vote vote : votingResult) {
-            if (vote.getVote().equals("PRZECIW")) {
-                sum++;
-            }
-        }
-        return ((double) sum / votingResult.size()) * 100;
-    }
-
-    private double calculateInFavourVotesPercentage(List<Vote> votingResult) {
-        int sum = 0;
-        for (Vote vote : votingResult) {
-            if (vote.getVote().equals("ZA")) {
+            if (vote.getVote().toString().equals(vote.getVoteAsString(voteType))) {
                 sum++;
             }
         }
@@ -73,16 +42,17 @@ public class VotingResult {
      */
     public void printVoteForVoter(String voterName) {
         int index = getIndex(voterName);
-        System.out.println(voterName + ": " + votingResult.get(index).getVote());
+        Boolean vote = votingResult.get(index).getVote();
+        Vote voteCasted = new Vote(voterName, vote);
+        System.out.println(voterName + ": " + voteCasted.getVoteAsString(vote));
     }
 
     private int getIndex(String voterName) {
-        int index = -1;
         for (int i = 0; i < votingResult.size(); i++) {
             if (votingResult.get(i).getVoter().equals(voterName)) {
-                index = i;
+                return i;
             }
         }
-        return index;
+        return -1;
     }
 }

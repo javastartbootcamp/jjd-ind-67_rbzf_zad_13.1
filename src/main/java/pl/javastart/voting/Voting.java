@@ -31,8 +31,7 @@ public class Voting {
      */
     VotingResult executeVoting(List<String> voters, Scanner scanner) {
 
-        List<Vote> resultList = new ArrayList<>();
-        VotingResult votingResult = new VotingResult(resultList);
+        VotingResult votingResult = new VotingResult();
         for (String voter : voters) {
             String input = "";
             while (!(input.equals("z") || input.equals("p") || input.equals("w"))) {
@@ -40,17 +39,21 @@ public class Voting {
                 input = scanner.nextLine();
             }
             Vote voteCasted = new Vote(voter, generateVote(input));
-            resultList.add(voteCasted);
+            votingResult.votingResult.add(voteCasted);
         }
         return votingResult; // to możesz (a nawet powinieneś/powinnaś) zmienić :)
     }
 
-    private String generateVote(String input) {
-        return switch (input) {
-            case "z" -> "ZA";
-            case "p" -> "PRZECIW";
-            case "w" -> "WSTRZYMAŁ SIĘ";
-            default -> "glos nieprawidłowy";
-        };
+    private Boolean generateVote(String input) {
+        if (input.equals("z")) {
+            return true;
+        }
+        if (input.equals("p")) {
+            return false;
+        }
+        if (input.equals("w")) {
+            return null;
+        }
+        return null;
     }
 }

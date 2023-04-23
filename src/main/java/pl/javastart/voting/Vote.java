@@ -4,9 +4,9 @@ package pl.javastart.voting;
 public class Vote {
 
     private String voter;
-    private String vote; // ZA, PRZECIW, wstrzymanie się
+    private Boolean vote; // ZA, PRZECIW, wstrzymanie się
 
-    public Vote(String voter, String vote) {
+    public Vote(String voter, Boolean vote) {
         this.voter = voter;
         this.vote = vote;
     }
@@ -15,7 +15,17 @@ public class Vote {
         return voter;
     }
 
-    public String getVote() {
+    public Boolean getVote() {
         return vote;
+    }
+
+    public String getVoteAsString(Boolean vote) {
+        if (vote.equals(Boolean.TRUE)) {
+            return "ZA";
+        } else if (vote.equals(Boolean.FALSE)) {
+            return "PRZECIW";
+        } else {
+            return "WSTRZYMAL SIE";
+        }
     }
 }
