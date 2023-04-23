@@ -1,5 +1,7 @@
 package pl.javastart.voting;
 
+import com.sun.source.tree.BreakTree;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,6 +15,7 @@ public class Voting {
         voters.add("Jan Kowalski");
         voters.add("Zigniew Siobro");
         voters.add("Zbyszek Stonoga");
+        //voters.add("Jacek Placek");
 
         Voting voting = new Voting();
 
@@ -28,7 +31,26 @@ public class Voting {
      */
     VotingResult executeVoting(List<String> voters, Scanner scanner) {
 
-        return null; // to możesz (a nawet powinieneś/powinnaś) zmienić :)
+        List<Vote> resultList = new ArrayList<>();
+        VotingResult votingResult = new VotingResult(resultList);
+        for (String voter : voters) {
+            String input = "";
+            while (!(input.equals("z") || input.equals("p") || input.equals("w"))) {
+                System.out.println("Jak głosuje " + voter + "? (z - za, p - przeciw, w - wstrzymanie się)");
+                input = scanner.nextLine();
+            }
+            Vote voteCasted = new Vote(voter, generateVote(input));
+            resultList.add(voteCasted);
+        }
+        return votingResult; // to możesz (a nawet powinieneś/powinnaś) zmienić :)
     }
 
+    private String generateVote(String input) {
+        return switch (input) {
+            case "z" -> "ZA";
+            case "p" -> "PRZECIW";
+            case "w" -> "WSTRZYMAŁ SIĘ";
+            default -> "glos nieprawidłowy";
+        };
+    }
 }
