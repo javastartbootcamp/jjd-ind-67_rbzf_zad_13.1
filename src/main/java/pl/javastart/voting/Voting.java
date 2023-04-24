@@ -39,7 +39,7 @@ public class Voting {
                 input = scanner.nextLine();
             }
             Vote voteCasted = new Vote(voter, generateVote(input));
-            votingResult.votingResult.add(voteCasted);
+            votingResult.getVotingResult().add(voteCasted);
         }
         return votingResult; // to możesz (a nawet powinieneś/powinnaś) zmienić :)
     }

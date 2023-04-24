@@ -7,7 +7,11 @@ import java.util.List;
  * Możesz dodać kolejne metody i pola do klasy. Nie zmieniaj istniejących metod.
  */
 public class VotingResult {
-    List<Vote> votingResult = new ArrayList<>();
+    private List<Vote> votingResult = new ArrayList<>();
+
+    public List<Vote> getVotingResult() {
+        return votingResult;
+    }
 
     /**
      * Metoda powinna drukować wyniki głosowania w takiej postaci:
