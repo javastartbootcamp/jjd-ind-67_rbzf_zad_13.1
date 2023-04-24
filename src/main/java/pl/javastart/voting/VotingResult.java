@@ -27,7 +27,7 @@ public class VotingResult {
         int sum = 0;
         for (Vote vote : votingResult) {
 
-            if (vote.getVote().toString().equals(vote.getVoteAsString(voteType))) {
+            if (vote.getVote() == voteType) {
                 sum++;
             }
         }
@@ -42,9 +42,8 @@ public class VotingResult {
      */
     public void printVoteForVoter(String voterName) {
         int index = getIndex(voterName);
-        Boolean vote = votingResult.get(index).getVote();
-        Vote voteCasted = new Vote(voterName, vote);
-        System.out.println(voterName + ": " + voteCasted.getVoteAsString(vote));
+        Vote vote = votingResult.get(index);
+        System.out.println(voterName + ": " + vote.getVoteAsString());
     }
 
     private int getIndex(String voterName) {

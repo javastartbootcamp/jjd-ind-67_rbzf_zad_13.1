@@ -19,13 +19,13 @@ public class Vote {
         return vote;
     }
 
-    public String getVoteAsString(Boolean vote) {
-        if (vote.equals(Boolean.TRUE)) {
+    public String getVoteAsString() {
+        if (vote == null) {
+            return "WSTRZYMAŁ SIĘ";
+        } else if (vote) {
             return "ZA";
-        } else if (vote.equals(Boolean.FALSE)) {
-            return "PRZECIW";
         } else {
-            return "WSTRZYMAL SIE";
+            return "PRZECIW";
         }
     }
 }
